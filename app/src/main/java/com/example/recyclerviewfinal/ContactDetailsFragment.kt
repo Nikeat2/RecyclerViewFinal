@@ -55,8 +55,6 @@ class ContactDetailsFragment : Fragment() {
             contactPhone = it.getString(CONTACT_PHONE_ARG)
             contactPhoto = it.getString(CONTACT_PHOTO_ARG)
         }
-
-
     }
 
     override fun onCreateView(
@@ -64,9 +62,7 @@ class ContactDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_contact_details, container, false)
-
         return view
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -82,8 +78,6 @@ class ContactDetailsFragment : Fragment() {
                 contactPhoto = contactPhoto.toString()
             )
         }
-
-
     }
 
     companion object {
@@ -105,26 +99,21 @@ class ContactDetailsFragment : Fragment() {
                     putString(CONTACT_PHONE_ARG, contactPhone)
                 }
             }
-
     }
 
     private fun btnClick(
         contactName: String, contactSurname: String,
         contactPhone: String, contactPhoto: String
     ) {
-
         changefragment = ChangeContactFragment.newInstance(
             contactName = contactName,
             contactPhone = contactPhone,
             contactPhoto = contactPhoto,
             contactSurname = contactSurname
         )
-
         parentFragmentManager.beginTransaction().add(R.id.fragmentContainerView, changefragment)
             .commit()
         parentFragmentManager.beginTransaction().remove(this)
     }
-
-
 }
 

@@ -17,8 +17,7 @@ data class Contacts (
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString()
-    ) {
-    }
+    )
 
     override fun describeContents(): Int {
 return 0
@@ -29,8 +28,6 @@ return 0
         parcel.writeString(contactSurname)
         parcel.writeString(contactPhone)
         parcel.writeString(contactPhoto)
-
-
     }
 
     companion object CREATOR : Parcelable.Creator<Contacts> {

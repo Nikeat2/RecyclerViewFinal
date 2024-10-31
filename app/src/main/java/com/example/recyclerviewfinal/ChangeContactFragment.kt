@@ -15,14 +15,12 @@ private var changeContactSurname: String? = null
 private var changeContactPhoto: String? = null
 private var changeContactPhone: String? = null
 
-
 class ChangeContactFragment : Fragment() {
 
     private lateinit var changeNameEt: EditText
     private lateinit var saveTheChangesBtn: Button
     private lateinit var changeSurnameEt: EditText
     private lateinit var changePhoneEt: EditText
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +29,6 @@ class ChangeContactFragment : Fragment() {
             changeContactSurname = it.getString(CONTACT_SURNAME_ARG)
             changeContactPhoto = it.getString(CONTACT_PHOTO_ARG)
             changeContactPhone = it.getString(CONTACT_PHONE_ARG)
-
         }
 
     }
@@ -40,11 +37,8 @@ class ChangeContactFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.fragment_change_contact, container, false)
         return view
-
-
     }
 
 
@@ -55,10 +49,7 @@ class ChangeContactFragment : Fragment() {
             sendInfoBack()
             parentFragmentManager.beginTransaction().remove(this).commit()
             parentFragmentManager.popBackStack()
-
-
         }
-
     }
 
     companion object {
@@ -80,7 +71,6 @@ class ChangeContactFragment : Fragment() {
                     putString(CONTACT_PHONE_ARG, contactPhone)
                 }
             }
-
     }
 
 

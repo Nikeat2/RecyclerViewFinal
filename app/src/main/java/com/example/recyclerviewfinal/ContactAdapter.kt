@@ -17,6 +17,7 @@ class ContactAdapter(private var contactList: MutableList<Contacts>):
 
     interface onItemClickListener {
         fun onClick(position: Int)
+        fun onLongClick(position: Int)
     }
 
     fun setOnItemClickListener(listener: onItemClickListener) {
@@ -30,13 +31,18 @@ class ContactAdapter(private var contactList: MutableList<Contacts>):
         val contactPhotoIv: ImageView = view.findViewById(R.id.contactPhoto)
         val contactNumberTv: TextView = view.findViewById(R.id.contactNumber)
 
-
         init {
             itemView.setOnClickListener {
                 mListener.onClick(adapterPosition)
             }
         }
 
+        init {
+            itemView.setOnLongClickListener {
+                mListener.onLongClick(adapterPosition)
+                true
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,11 +57,6 @@ class ContactAdapter(private var contactList: MutableList<Contacts>):
         holder.contactSurnameTv.text = contact.contactSurname
         holder.contactNumberTv.text = contact.contactPhone
         Glide.with(holder.itemView.context).load(contact.contactPhoto).into(holder.contactPhotoIv)
-
-
-
-
-
     }
 
     override fun getItemCount(): Int {

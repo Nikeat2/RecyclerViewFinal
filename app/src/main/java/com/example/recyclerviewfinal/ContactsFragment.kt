@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,8 +21,6 @@ private lateinit var fragmentDetails: ContactDetailsFragment
 
 class ContactsFragment : Fragment() {
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -29,20 +28,15 @@ class ContactsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_contacts, container, false)
         val searchEditText: EditText = view.findViewById(R.id.searchEditText)
         searchEditText.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 adapter.filter(s.toString())
             }
 
-            override fun afterTextChanged(s: Editable?) {
-            }
-
+            override fun afterTextChanged(s: Editable?) {}
         })
         return view
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,13 +44,9 @@ class ContactsFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         initView()
 
-
         adapter = ContactAdapter(contactList)
 
-
-
         recyclerView.layoutManager = LinearLayoutManager(context)
-
         recyclerView.adapter = adapter
 
 
@@ -76,7 +66,6 @@ class ContactsFragment : Fragment() {
                     contactPhoto = contactPhoto
                 )
 
-
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainerView, fragmentDetails)
                     .addToBackStack("gang").commit()
@@ -91,27 +80,35 @@ class ContactsFragment : Fragment() {
                     updateContactSurname(position, resultSurname.toString())
                     updateContactPhone(position, resultPhone.toString())
                 }
-
-
             }
-
+            override fun onLongClick(position: Int) {
+                showDialogToDelete(position)
+            }
         })
+    }
 
-
+    private fun showDialogToDelete(position: Int){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete this contact")
+            .setMessage("Are you sure?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                contactList.removeAt(position)
+                adapter.notifyItemChanged(position)
+                adapter.notifyItemRangeChanged(position, contactList.size)
+            }
+            builder.create().show()
     }
 
     private fun sendInfo(
         contactName: String, contactSurname: String,
         contactPhone: String, contactPhoto: String
     ) {
-
         fragmentDetails = ContactDetailsFragment.newInstance(
             contactName = contactName,
             contactSurname = contactSurname,
             contactPhone = contactPhone,
             contactPhoto = contactPhoto,
         )
-
     }
 
     private fun initView() {
@@ -198,10 +195,6 @@ class ContactsFragment : Fragment() {
         Contacts("Yardley", "Hughes", "(989) 123-4567", "https://randomuser.me/api/portraits/men/39.jpg"),
         Contacts("Zara", "Woods", "(090) 234-5678", "https://randomuser.me/api/portraits/women/40.jpg")
         )
-
-
-
-
     }
 
     fun updateContactName(position: Int, newName: String) {

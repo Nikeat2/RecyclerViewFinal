@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-
-
         supportFragmentManager.beginTransaction()
             .add(R.id.fragmentContainerView, ContactsFragment()).addToBackStack("gang")
             .commit()
